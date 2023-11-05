@@ -1,20 +1,35 @@
 const express = require('express');
 const dotenv = require('dotenv')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const mongoose = require('mongoose')
 const userRouter = require('./routes/users')
+const loggerOne = require('./middlewares/loggerOne')
+
 
 dotenv.config()
-const app = express();
 
 const {
     PORT = 3000, 
-    API_URL = "http://127.0.0.1"
+    API_URL = "http://127.0.0.1",
+    MONGO_URL = "mongodb://127.0.0.1:27017/test"
 } = process.env;
+
+
+mongoose
+  .connect(MONGO_URL)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Failed to connect to MongoDB", err));
+const app = express();
 
 const helloWorld = (request, response) => {
     response.status(200),
     response.send('Hello, World!')
 }
 
+app.use(cors())
+app.use(loggerOne)
+app.use(bodyParser.json())
 app.get('/', helloWorld)
 
 app.post('/', (request, response) => {
