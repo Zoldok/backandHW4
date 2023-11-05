@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const userRouter = require('./routes/users')
+const bookRouter = require("./routes/books");
 const loggerOne = require('./middlewares/loggerOne')
 
 
@@ -38,6 +39,17 @@ app.post('/', (request, response) => {
 })
 
 app.use(userRouter)
+app.use(bookRouter);
+
+app.use(function (req, res, next) {
+    res.status(404).send("Not Found");
+  });
+  
+  app.use(function (err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send("Internal Server Error");
+  });
+  
 
 app.listen(PORT, () => {
     console.log(`Сервер запущен по адресу ${API_URL}:${PORT}`);
