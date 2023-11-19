@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const router = require('express').Router()
 
 const {
   getBooks,
@@ -6,12 +6,12 @@ const {
   createBook,
   updateBook,
   deleteBook,
-} = require("../controllers/books");
+} = require('../controllers/books')
 
-router.get("/books", getBooks);
-router.get("/books/:book_id", getBook);
-router.post("/books", createBook);
-router.patch("/books/:book_id", updateBook);
-router.delete("/books/:book_id", deleteBook);
+router.get('/books', getBooks)
+router.get('/books/:book_id', getBook)
+router.post('/books', createBook)
+router.patch('/books/:book_id', updateBook)
+router.delete('/books/:book_id', deleteBook)
 
-module.exports = router;
+module.exports = router
